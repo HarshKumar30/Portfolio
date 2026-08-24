@@ -1,0 +1,87 @@
+---
+const items = [
+  'Full-Stack Developer',
+  'React.js',
+  'Node.js',
+  'JavaScript',
+  'Java & Spring',
+  'HTML / CSS',
+  'Problem Solver',
+  'Open Source',
+];
+---
+
+<section class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {
+      [0, 1].map((copy) => (
+        <div class="marquee__group">
+          {
+            items.map((item) => (
+              <span class="marquee__item">{item}</span>
+            ))
+          }
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .marquee {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: #0d0d0d;
+    overflow: hidden;
+    padding: 1.25rem 0;
+  }
+
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    animation: scroll 30s linear infinite;
+  }
+
+  .marquee__group {
+    display: flex;
+    gap: 3rem;
+    padding-right: 3rem;
+  }
+
+  .marquee__item {
+    position: relative;
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.85);
+    transition: color 0.3s;
+    cursor: default;
+  }
+
+  .marquee__item::before {
+    content: '✳';
+    position: absolute;
+    left: -1.9rem;
+    color: #22d3ee;
+    font-size: 0.9em;
+  }
+
+  .marquee__item:hover {
+    background: linear-gradient(90deg, #22d3ee, #a855f7, #ec4899, #f97316, #fbbf24);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  @keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+</style>

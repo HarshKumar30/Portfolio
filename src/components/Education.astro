@@ -1,0 +1,212 @@
+---
+const education = [
+  {
+    period: '2024 — Present',
+    degree: 'B.Tech — Computer Science & Engineering',
+    school: 'United Institute of Technology, Prayagraj (A.K.T.U)',
+    detail: 'CGPA: 7.5/10',
+    accent: true,
+  },
+  {
+    period: '2024',
+    degree: 'Class XII — Science (I.S.C)',
+    school: "St. Joseph's College, Prayagraj",
+    detail: 'Percentage: 83%',
+    accent: false,
+  },
+  {
+    period: '2023',
+    degree: 'Class X (I.C.S.E)',
+    school: "St. Joseph's College, Prayagraj",
+    detail: 'Percentage: 85%',
+    accent: false,
+  },
+];
+---
+
+<section class="about" id="about" data-section>
+  <div class="about__head">
+    <p class="section-label" data-reveal><span class="section-label__num">01</span> / About</p>
+    <h2 class="section-title" data-split-line>
+      <span data-line>EDUCATION</span>
+      <span data-line>&amp; JOURNEY</span>
+    </h2>
+  </div>
+
+  <div class="about__body">
+    <p class="about__intro" data-reveal>
+      Computer Science student and aspiring full-stack developer who loves turning
+      ideas into clean, functional digital experiences. Currently pushing my limits
+      one line of code at a time.
+    </p>
+
+    <div class="about__timeline">
+      {
+        education.map((item) => (
+          <article class="edu" data-reveal>
+            <div class="edu__period">{item.period}</div>
+            <div class={`edu__marker${item.accent ? ' edu__marker--accent' : ''}`}></div>
+            <div class="edu__content">
+              <h3 class="edu__degree">{item.degree}</h3>
+              <p class="edu__school">{item.school}</p>
+              <p class="edu__detail">{item.detail}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding: 8rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 2rem;
+  }
+
+  .section-label__num {
+    color: #10b981;
+    font-weight: 700;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.02;
+    text-transform: uppercase;
+  }
+
+  .section-title span {
+    display: block;
+    overflow: hidden;
+  }
+
+  .section-title span:last-child {
+    background: linear-gradient(90deg, #10b981, #34d399, #2dd4bf);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .about__body {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 4rem;
+  }
+
+  .about__intro {
+    font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.75);
+    border-left: 3px solid #10b981;
+    padding-left: 1.5rem;
+  }
+
+  .about__timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .about__timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      rgba(16, 185, 129, 0.6),
+      rgba(255, 255, 255, 0.1)
+    );
+  }
+
+  .edu {
+    position: relative;
+    display: grid;
+    grid-template-columns: 140px 20px 1fr;
+    gap: 1.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .edu:last-child {
+    padding-bottom: 0;
+  }
+
+  .edu__period {
+    font-size: 0.85rem;
+    color: #34d399;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding-top: 0.3rem;
+    font-weight: 500;
+  }
+
+  .edu__marker {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    margin-top: 0.5rem;
+    border: 2px solid #0a0a0a;
+  }
+
+  .edu__marker--accent {
+    background: #10b981;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+  }
+
+  .edu__degree {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .edu__school {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.3rem;
+  }
+
+  .edu__detail {
+    font-size: 0.9rem;
+    color: #34d399;
+  }
+
+  @media (max-width: 768px) {
+    .about {
+      padding: 5rem 1.25rem;
+    }
+
+    .about__body {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .edu {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .edu__marker {
+      display: none;
+    }
+  }
+</style>

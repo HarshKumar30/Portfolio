@@ -1,17 +1,28 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Marquee from '../components/Marquee.astro';
+import Education from '../components/Education.astro';
+import Achievements from '../components/Achievements.astro';
+import LeetCode from '../components/LeetCode.astro';
+import Projects from '../components/Projects.astro';
+import TechStack from '../components/TechStack.astro';
+import Hobbies from '../components/Hobbies.astro';
+import Contact from '../components/Contact.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Harsh Kumar — Portfolio">
+  <Nav />
+  <main>
+    <Hero />
+    <Marquee />
+    <Education />
+    <Achievements />
+    <LeetCode />
+    <Projects />
+    <TechStack />
+    <Hobbies />
+    <Contact />
+  </main>
+</Layout>

@@ -1,0 +1,164 @@
+﻿---
+const hobbies = [
+  { title: 'Coding Challenges', desc: 'Algorithmic problem solving on competitive platforms', icon: '01' },
+  { title: 'Emerging Tech', desc: 'Reading about new technologies and trends', icon: '02' },
+  { title: 'Chess & Sports', desc: 'Playing chess and outdoor sports', icon: '03' },
+  { title: 'Motorsports', desc: 'Enthusiast of racing and high-speed motorsports', icon: '05' },
+];
+---
+
+<section class="hobbies" id="hobbies" data-section>
+  <div class="hobbies__head">
+    <p class="section-label" data-reveal><span class="section-label__num">06</span> / Hobbies</p>
+    <h2 class="section-title" data-split-line>
+      <span data-line>BEYOND</span>
+      <span data-line>THE CODE</span>
+    </h2>
+  </div>
+
+  <div class="hobbies__grid">
+    {
+      hobbies.map((hobby) => (
+        <div class="hobby" data-hobby>
+          <span class="hobby__icon">{hobby.icon}</span>
+          <h3 class="hobby__title">{hobby.title}</h3>
+          <p class="hobby__desc">{hobby.desc}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .hobbies {
+    padding: 8rem 3rem;
+    background: #0d0d0d;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 2rem;
+  }
+
+  .section-label__num {
+    color: #a855f7;
+    font-weight: 700;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.02;
+    text-transform: uppercase;
+  }
+
+  .section-title span {
+    display: block;
+    overflow: hidden;
+  }
+
+  .section-title span:last-child {
+    background: linear-gradient(90deg, #a855f7, #c084fc, #e879f9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .hobbies__head {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .hobbies__grid {
+    max-width: 1400px;
+    margin: 4rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .hobby {
+    padding: 2.5rem 1.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    background: #111;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1), background 0.5s;
+  }
+
+  .hobby::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #a855f7, #ec4899);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .hobby:hover {
+    transform: translateY(-6px);
+    background: #141414;
+  }
+
+  .hobby:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .hobby__icon {
+    display: inline-block;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #a855f7;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hobby__title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+
+  .hobby__desc {
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 1000px) {
+    .hobbies {
+      padding: 5rem 1.25rem;
+    }
+
+    .hobbies__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hobbies__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

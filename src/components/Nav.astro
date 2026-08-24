@@ -1,0 +1,129 @@
+﻿---
+const links = [
+  { label: 'About', href: '#about' },
+  { label: 'Achievements', href: '#achievements' },
+  { label: 'LeetCode', href: '#leetcode' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Tech', href: '#tech' },
+  { label: 'Hobbies', href: '#hobbies' },
+  { label: 'Contact', href: '#contact' },
+];
+---
+
+<header class="nav" data-nav>
+  <a href="#hero" class="nav__logo">
+    <span class="nav__logo-text">HK<span class="nav__logo-accent">/</span>04</span>
+  </a>
+  <nav class="nav__links">
+    {
+      links.map((link) => (
+        <a href={link.href} class="nav__link" data-hover>
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+  <a href="#contact" class="nav__cta" data-hover>
+    <span class="nav__cta-text">Let's Talk</span>
+  </a>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 3rem;
+    mix-blend-mode: difference;
+    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .nav.hidden {
+    transform: translateY(-100%);
+  }
+
+  .nav__logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+
+  .nav__logo-accent {
+    color: #22d3ee;
+  }
+
+  .nav__links {
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  .nav__link {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.25rem 0;
+  }
+
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(90deg, #22d3ee, #a855f7, #ec4899);
+    transition: width 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .nav__link:hover::after {
+    width: 100%;
+  }
+
+  .nav__cta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 100px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    transition: background 0.4s, color 0.4s, border-color 0.4s;
+  }
+
+  .nav__cta:hover {
+    background: linear-gradient(90deg, #22d3ee, #a855f7, #ec4899);
+    border-color: #22d3ee;
+    color: #0a0a0a;
+  }
+
+  @media (max-width: 768px) {
+    .nav {
+      padding: 1rem 1.25rem;
+    }
+
+    .nav__links {
+      display: none;
+    }
+
+    .nav__cta {
+      padding: 0.5rem 1rem;
+      font-size: 0.7rem;
+    }
+  }
+</style>

@@ -1,0 +1,209 @@
+---
+const categories = [
+  {
+    name: 'Languages',
+    items: [
+      { name: 'C', icon: 'c' },
+      { name: 'Java', icon: 'java' },
+      { name: 'Python', icon: 'python' },
+      { name: 'HTML/CSS', icon: 'html5' },
+      { name: 'JavaScript', icon: 'javascript' },
+    ],
+  },
+  {
+    name: 'Frameworks',
+    items: [
+      { name: 'Astro', icon: 'astro' },
+      { name: 'React', icon: 'react' },
+      { name: 'Node.js', icon: 'nodedotjs' },
+      { name: 'Express', icon: 'express' },
+      { name: 'Django', icon: 'django' },
+    ],
+  },
+  {
+    name: 'Data & Cloud',
+    items: [
+      { name: 'PostgreSQL', icon: 'postgresql' },
+      { name: 'Redis', icon: 'redis' },
+      { name: 'Pandas', icon: 'pandas' },
+      { name: 'NumPy', icon: 'numpy' },
+      { name: 'scikit-learn', icon: 'scikitlearn' },
+    ],
+  },
+  {
+    name: 'Tooling',
+    items: [
+      { name: 'Git', icon: 'git' },
+      { name: 'GitHub Actions', icon: 'githubactions' },
+      { name: 'VS Code', icon: 'visualstudiocode' },
+      { name: 'Docker', icon: 'docker' },
+      { name: 'Kubernetes', icon: 'kubernetes' },
+      { name: 'Vercel', icon: 'vercel' },
+    ],
+  },
+  {
+    name: 'Photo & Video Editing',
+    items: [
+      { name: 'Lightroom Classic', icon: 'adobelightroomclassic' },
+      { name: 'Premiere Pro', icon: 'adobepremierepro' },
+    ],
+  },
+];
+---
+
+<section class="stack" id="tech" data-section>
+  <div class="stack__head">
+    <p class="section-label" data-reveal><span class="section-label__num">05</span> / Tech Stack</p>
+    <h2 class="section-title" data-split-line>
+      <span data-line>TOOLS &amp;</span>
+      <span data-line>TECHNOLOGIES</span>
+    </h2>
+  </div>
+
+  <div class="stack__grid">
+    {
+      categories.map((cat) => (
+        <article class="stack__card" data-reveal>
+          <h3 class="stack__category">{cat.name}</h3>
+          <div class="stack__items">
+            {
+              cat.items.map((item) => (
+                <span class="stack__item">
+                  <img
+                    class="stack__icon"
+                    src={`/icons/${item.icon}.svg`}
+                    alt=""
+                    width="18"
+                    height="18"
+                    loading="lazy"
+                  />
+                  <span class="stack__item-name">{item.name}</span>
+                </span>
+              ))
+            }
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .stack {
+    padding: 8rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 2rem;
+  }
+
+  .section-label__num {
+    color: #2dd4bf;
+    font-weight: 700;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.02;
+    text-transform: uppercase;
+  }
+
+  .section-title span {
+    display: block;
+    overflow: hidden;
+  }
+
+  .section-title span:last-child {
+    background: linear-gradient(90deg, #2dd4bf, #22c55e, #84cc16);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .stack__grid {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .stack__card {
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    background: #0d0d0d;
+    transition: border-color 0.5s, transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .stack__card:hover {
+    border-color: rgba(45, 212, 191, 0.4);
+    transform: translateY(-6px);
+  }
+
+  .stack__category {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .stack__category::before {
+    content: '';
+    width: 4px;
+    height: 1.2em;
+    border-radius: 2px;
+    background: linear-gradient(180deg, #2dd4bf, #84cc16);
+  }
+
+  .stack__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .stack__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.85);
+    transition: border-color 0.3s, color 0.3s, transform 0.3s;
+  }
+
+  .stack__item:hover {
+    border-color: rgba(45, 212, 191, 0.4);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .stack__icon {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .stack {
+      padding: 5rem 1.25rem;
+    }
+  }
+</style>

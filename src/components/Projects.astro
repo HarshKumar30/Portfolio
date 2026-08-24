@@ -1,0 +1,461 @@
+---
+const githubUser = 'Harshkumar30';
+const githubUrl = `https://github.com/${githubUser}`;
+---
+
+<section class="projects" id="projects" data-section>
+  <div class="projects__head">
+    <p class="section-label" data-reveal><span class="section-label__num">04</span> / Projects</p>
+    <h2 class="section-title" data-split-line>
+      <span data-line>SELECTED</span>
+      <span data-line>WORK</span>
+    </h2>
+  </div>
+
+  <div class="projects__profile" data-reveal>
+    <a class="projects__profile-link" href={githubUrl} target="_blank" rel="noopener noreferrer">
+      <span class="projects__profile-logo">GH</span>
+      <div>
+        <p class="projects__profile-name">{githubUser}</p>
+        <p class="projects__profile-handle">Fetched live from GitHub ↗</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="projects__grid" data-projects-grid>
+    <p class="projects__loading" data-projects-loading>Loading repositories from GitHub…</p>
+  </div>
+
+  <p class="projects__error" data-projects-error hidden>
+    Couldn't load repositories. Check back later.
+  </p>
+</section>
+
+<script>
+  const username = 'Harshkumar30';
+  const grid = document.querySelector('[data-projects-grid]');
+  const loadingEl = document.querySelector('[data-projects-loading]');
+  const errorEl = document.querySelector('[data-projects-error]');
+
+  const DEFAULT_DESC = 'Open source project on GitHub.';
+
+  function prettify(name) {
+    return name
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+
+  function timeAgo(iso) {
+    const seconds = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
+    if (seconds < 60) return 'just now';
+    const mins = Math.floor(seconds / 60);
+    if (mins < 60) return `${mins}m ago`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    if (days < 30) return `${days}d ago`;
+    const months = Math.floor(days / 30);
+    return `${months}mo ago`;
+  }
+
+  function starIcon() {
+    return '<svg class="projects__star" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>';
+  }
+
+  function createCard(repo, index) {
+    const a = document.createElement('a');
+    a.className = 'project';
+    a.href = repo.html_url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.style.animationDelay = `${(index % 4) * 90}ms`;
+
+    const top = document.createElement('div');
+    top.className = 'project__top';
+
+    const num = document.createElement('span');
+    num.className = 'project__index';
+    num.textContent = String(index + 1).padStart(2, '0');
+
+    const lang = document.createElement('span');
+    lang.className = 'project__status';
+    lang.textContent = repo.language || 'GitHub';
+    top.append(num, lang);
+
+    const visual = document.createElement('div');
+    visual.className = 'project__visual';
+    visual.setAttribute('aria-hidden', 'true');
+
+    const visualText = document.createElement('span');
+    visualText.className = 'project__visual-text';
+    visualText.textContent = 'HK';
+    visual.appendChild(visualText);
+
+    const title = document.createElement('h3');
+    title.className = 'project__title';
+    title.textContent = prettify(repo.name);
+
+    const desc = document.createElement('p');
+    desc.className = 'project__desc';
+    desc.textContent = repo.description || DEFAULT_DESC;
+
+    const tech = document.createElement('div');
+    tech.className = 'project__tech';
+    const tags = [repo.language, ...(repo.topics || []).slice(0, 3)].filter(Boolean);
+    tags.slice(0, 4).forEach((t) => {
+      const span = document.createElement('span');
+      span.className = 'project__tech-item';
+      span.textContent = t;
+      tech.appendChild(span);
+    });
+
+    const link = document.createElement('div');
+    link.className = 'project__link';
+    const linkText = document.createElement('span');
+    linkText.textContent = `View Project · ${timeAgo(repo.updated_at)}`;
+    const arrow = document.createElement('span');
+    arrow.className = 'project__link-arrow';
+    arrow.textContent = '↗';
+    if (repo.stargazers_count > 0) {
+      const star = document.createElement('span');
+      star.className = 'project__stars';
+      star.innerHTML = starIcon() + ' ' + repo.stargazers_count;
+      linkText.append('   ', star);
+    }
+    link.append(linkText, arrow);
+
+    a.append(top, visual, title, desc, tech, link);
+    return a;
+  }
+
+  async function loadRepos() {
+    try {
+      const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+      if (!res.ok) throw new Error();
+      const repos = await res.json();
+      const excluded = ['portfolio', 'student-archive', 'e-commerce-website'];
+      const owned = repos.filter((r) => (!r.fork || r.name.toLowerCase() === 'uit-spam') && !excluded.includes(r.name.toLowerCase()));
+
+      if (!owned.length) {
+        if (loadingEl) loadingEl.textContent = 'No repositories found yet.';
+        return;
+      }
+
+      if (loadingEl) loadingEl.remove();
+      owned.forEach((repo, i) => grid.appendChild(createCard(repo, i)));
+    } catch {
+      if (loadingEl) loadingEl.remove();
+      if (errorEl) errorEl.hidden = false;
+    }
+  }
+
+  loadRepos();
+</script>
+
+<style is:global>
+  .projects {
+    padding: 8rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 2rem;
+  }
+
+  .section-label__num {
+    color: #ec4899;
+    font-weight: 700;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.02;
+    text-transform: uppercase;
+  }
+
+  .section-title span {
+    display: block;
+    overflow: hidden;
+  }
+
+  .section-title span:last-child {
+    background: linear-gradient(90deg, #ec4899, #d946ef, #a855f7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .projects__profile {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    background: #0d0d0d;
+  }
+
+  .projects__profile-link {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s;
+  }
+
+  .projects__profile-link:hover {
+    color: #ec4899;
+  }
+
+  .projects__profile-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ec4899, #a855f7);
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+  }
+
+  .projects__profile-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .projects__profile-handle {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .projects__grid {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .projects__loading,
+  .projects__error {
+    grid-column: 1 / -1;
+    padding: 2rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.95rem;
+    font-weight: 300;
+  }
+
+  .project {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    text-decoration: none;
+    color: #fff;
+    background: #0d0d0d;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1), border-color 0.5s;
+    animation: projectFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes projectFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .project::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(236, 72, 153, 0.08),
+      transparent 50%
+    );
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .project:hover {
+    transform: translateY(-8px);
+    border-color: rgba(236, 72, 153, 0.4);
+  }
+
+  .project:hover::before {
+    opacity: 1;
+  }
+
+  .project__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .project__index {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ec4899;
+  }
+
+  .project__status {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 0.35rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 100px;
+  }
+
+  .project__visual {
+    position: relative;
+    height: 180px;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at 30% 40%, rgba(236, 72, 153, 0.12), transparent 50%),
+      #111;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .project__visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .project__visual-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(236, 72, 153, 0.6);
+    position: relative;
+    z-index: 1;
+    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .project:hover .project__visual-text {
+    transform: scale(1.1);
+  }
+
+  .project__title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .project__desc {
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1.25rem;
+    position: relative;
+    z-index: 1;
+    flex-grow: 1;
+  }
+
+  .project__tech {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .project__tech-item {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .project__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #ec4899;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    z-index: 1;
+  }
+
+  .project__link-arrow {
+    font-size: 1.2rem;
+    transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .project:hover .project__link-arrow {
+    transform: translate(4px, -4px);
+  }
+
+  .project__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .project__star {
+    color: #ec4899;
+  }
+
+  @media (max-width: 900px) {
+    .projects {
+      padding: 5rem 1.25rem;
+    }
+
+    .projects__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
