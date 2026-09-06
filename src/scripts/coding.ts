@@ -2,6 +2,7 @@
 // Static fallback numbers ship in the HTML; this upgrades them live.
 import { profiles } from '../config';
 import { fetchCached } from '../lib/api';
+import { renderHeatmap, autoFitHeatmap, type DayCounts } from '../lib/heatmap';
 
 interface LcStats {
   totalSolved: number;
@@ -44,65 +45,30 @@ function countUp(el: HTMLElement | null, to: number, suffix = '') {
 const fmtRank = (r: number) =>
   r >= 1_000_000 ? `${(r / 1_000_000).toFixed(2)}M` : r >= 1000 ? `${(r / 1000).toFixed(1)}K` : `${r}`;
 
-/* ---------- heatmap ---------- */
-function level(count: number): number {
-  if (count <= 0) return 0;
-  if (count <= 2) return 1;
-  if (count <= 5) return 2;
-  if (count <= 9) return 3;
-  return 4;
-}
-
-function renderHeatmap(calendar: Record<string, number>) {
+/* ---------- heatmap (responsive, grid-aligned months) ---------- */
+function paintLcHeatmap(calendar: Record<string, number>) {
   const grid = $('heatmap');
   const months = $('hmMonths');
+  const meta = $('hmMeta');
   if (!grid || !months) return;
-
-  const dayMs = 86_400_000;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  // Start on the Sunday 52 weeks ago so columns always align Sun–Sat.
-  const end = new Date(today.getTime() + ((6 - today.getDay()) % 7) * dayMs);
-  const start = new Date(end.getTime() - (52 * 7 - 1) * dayMs);
-  start.setDate(start.getDate() - start.getDay());
-
-  const byDay = new Map<string, number>();
+  const counts: DayCounts = new Map();
   Object.entries(calendar).forEach(([ts, c]) => {
     const d = new Date(Number(ts) * 1000);
-    byDay.set(`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`, c);
+    counts.set(`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`, c);
   });
-
-  const frag = document.createDocumentFragment();
-  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const labels: { name: string; span: number }[] = [];
-  let activeDays = 0;
-  const cursor = new Date(start);
-
-  for (let col = 0; col < 53; col++) {
-    const colMonth = monthNames[cursor.getMonth()];
-    if (col === 0 || labels[labels.length - 1].name !== colMonth) labels.push({ name: colMonth, span: 1 });
-    else labels[labels.length - 1].span += 1;
-    for (let row = 0; row < 7; row++) {
-      const key = `${cursor.getFullYear()}-${cursor.getMonth()}-${cursor.getDate()}`;
-      const count = cursor > today ? -1 : byDay.get(key) || 0;
-      if (count > 0) activeDays += 1;
-      const cell = document.createElement('span');
-      if (count < 0) {
-        cell.className = 'hm-cell future';
-      } else {
-        cell.className = `hm-cell lv${level(count)}`;
-        cell.title = `${count} submission${count === 1 ? '' : 's'} on ${cursor.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
-      }
-      frag.appendChild(cell);
-      cursor.setDate(cursor.getDate() + 1);
-    }
-  }
-  grid.innerHTML = '';
-  grid.appendChild(frag);
-  months.innerHTML = labels.map((l) => `<span style="flex:${l.span}">${l.name}</span>`).join('');
-
-  const meta = $('hmMeta');
-  if (meta) meta.textContent = `${activeDays} active days in the last 12 months · refreshed live from LeetCode`;
+  const render = () =>
+    renderHeatmap({
+      grid,
+      months,
+      meta,
+      counts,
+      totalDays: 364,
+      formatTitle: (date, count) =>
+        `${count} submission${count === 1 ? '' : 's'} on ${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`,
+      metaText: (active) => `${active} active days in the last 12 months · refreshed live from LeetCode`,
+    });
+  render();
+  autoFitHeatmap(render);
 }
 
 /* ---------- fetch + render ---------- */
@@ -126,7 +92,7 @@ Promise.all([
     if (acc) acc.textContent = `${Math.round(lc.acceptanceRate)}%`;
     const rank = $('lcRank');
     if (rank) rank.textContent = fmtRank(lc.ranking);
-    if (lc.submissionCalendar) renderHeatmap(lc.submissionCalendar);
+    if (lc.submissionCalendar) paintLcHeatmap(lc.submissionCalendar);
   }
   if (gfg) {
     const d = gfg.problemsByDifficulty || gfg.data?.byDifficulty;

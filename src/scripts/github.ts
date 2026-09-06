@@ -1,6 +1,6 @@
-// Live GitHub repos → Projects section.
-// Replaces the static fallback cards with the top non-fork repos by stars
-// (tie-break: most recently pushed). Static cards stay if the API fails.
+// Live GitHub repos → Work index.
+// Replaces the static fallback rows with the top non-fork repos by stars
+// (tie-break: most recently pushed). Static rows stay if the API fails.
 import { profiles, liveConfig } from '../config';
 import { fetchCached, escapeHtml } from '../lib/api';
 import { setupPinIndex } from '../lib/pin';
@@ -15,52 +15,45 @@ interface GhRepo {
   forks_count: number;
   language: string | null;
   pushed_at: string;
+  topics?: string[];
 }
 
 const list = document.querySelector<HTMLElement>('.project-list');
 if (list) {
   const fallbackHTML = list.innerHTML;
+  const total = liveConfig.repoCount;
 
   // Skeleton while loading.
   list.innerHTML =
-    `<article class="project-card featured" aria-hidden="true"><div class="skel skel-line"></div><div class="skel skel-title"></div><div class="skel skel-text"></div><div class="skel skel-text short"></div></article>` +
-    `<article class="project-card" aria-hidden="true"><div class="skel skel-line"></div><div class="skel skel-title"></div><div class="skel skel-text"></div></article>`;
+    `<article class="work-row" aria-hidden="true"><div></div><div class="skel"></div><div></div></article>`.repeat(2);
 
   const prettyName = (name: string) => name.replace(/[-_]+/g, ' ');
 
   /** Repo links must stay on github.com — never render another scheme. */
   const safeUrl = (u: string) => (u.startsWith('https://github.com/') ? u : profiles.githubUrl);
 
-  const card = (r: GhRepo, i: number, featured: boolean) => {
+  const row = (r: GhRepo, i: number) => {
     const year = new Date(r.pushed_at).getFullYear();
-    const desc = r.description?.trim() ||
-      (r.language ? `An open-source ${escapeHtml(r.language)} project from my GitHub.` : 'An open-source project from my GitHub.');
-    const updated = new Date(r.pushed_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    const desc =
+      r.description?.trim() ||
+      (r.language
+        ? `An open-source ${escapeHtml(r.language)} project from my GitHub.`
+        : 'An open-source project from my GitHub.');
     const tags = [
-      r.language ? `<span>${escapeHtml(r.language)}</span>` : '',
-      `<span>★ ${r.stargazers_count}</span>`,
+      r.language ? `<span class="tag">${escapeHtml(r.language)}</span>` : '',
+      ...(r.topics || []).slice(0, 3).map((t) => `<span class="tag">${escapeHtml(t)}</span>`),
     ].join('');
-    return `<article class="project-card${featured ? ' featured' : ''} live-in" data-project-index="${i}">
-      <div class="pj-top"><span class="pnum">${String(i + 1).padStart(2, '0')}${featured ? ' — FEATURED' : ''}</span><span class="pyear">GITHUB // ${year}</span></div>
-      <h3>${escapeHtml(prettyName(r.name))}</h3>
-      <p class="pj-desc">${escapeHtml(desc)}</p>
-      <div class="tags">${tags}</div>
-      <div class="pj-foot">
-        <a href="${safeUrl(r.html_url)}" target="_blank" rel="noopener">View Code ↗</a>
-        <span class="pnote">★ ${r.stargazers_count} · ⑂ ${r.forks_count} · ${escapeHtml(updated)}</span>
+    return `<article class="work-row live-in" data-project-index="${i}">
+      <div class="work-idx">${String(i + 1).padStart(2, '0')}<b>//${String(total).padStart(2, '0')}</b></div>
+      <div>
+        <h3 class="work-title"><a href="${safeUrl(r.html_url)}" target="_blank" rel="noopener">${escapeHtml(prettyName(r.name))}</a></h3>
+        <p class="work-brief">${escapeHtml(desc)}</p>
+        <div class="work-tags">${tags}</div>
       </div>
-    </article>`;
-  };
-
-  const mini = (r: GhRepo, i: number) => {
-    const year = new Date(r.pushed_at).getFullYear();
-    const desc = r.description?.trim() ||
-      (r.language ? `An open-source ${escapeHtml(r.language)} project from my GitHub.` : 'An open-source project from my GitHub.');
-    return `<article class="project-card mini live-in" data-project-index="${i}">
-      <div class="pj-top"><span class="pnum">${String(i + 1).padStart(2, '0')}</span><span class="pyear">${year} // ${escapeHtml((r.language || 'CODE').toUpperCase())}</span></div>
-      <h3>${escapeHtml(prettyName(r.name))}</h3>
-      <p>${escapeHtml(desc)}</p>
-      <div class="tags"><span>★ ${r.stargazers_count}</span><span><a href="${safeUrl(r.html_url)}" target="_blank" rel="noopener" style="font:inherit">View Code ↗</a></span></div>
+      <div class="work-side">
+        <span class="work-meta">${year} // ★ ${r.stargazers_count}</span>
+        <a class="work-link" href="${safeUrl(r.html_url)}" target="_blank" rel="noopener">View code ↗</a>
+      </div>
     </article>`;
   };
 
@@ -74,23 +67,14 @@ if (list) {
             b.stargazers_count - a.stargazers_count ||
             new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime(),
         )
-        .slice(0, liveConfig.repoCount);
+        .slice(0, total);
       if (mine.length === 0) throw new Error('empty');
-
-      const [first, second, ...rest] = mine;
-      if (!first) throw new Error('empty');
-      let html = card(first, 0, true);
-      if (second) html += card(second, 1, false);
-      const minis = rest.map((r, k) => mini(r, k + 2)).join('');
-      if (minis) html += `<div class="project-grid">${minis}</div>`;
-      list.innerHTML = html;
-
-      // Rebind the pinned index + reveals to the live cards.
+      list.innerHTML = mine.map((r, i) => row(r, i)).join('');
       setupPinIndex();
       window.dispatchEvent(new Event('resize'));
     })
     .catch(() => {
-      // API failed — restore the curated static cards.
+      // API failed — restore the curated static rows.
       list.innerHTML = fallbackHTML;
       setupPinIndex();
       window.dispatchEvent(new Event('resize'));

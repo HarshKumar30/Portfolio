@@ -48,11 +48,12 @@
     canvas.width = Math.max(1, Math.floor(w * dpr));
     canvas.height = Math.max(1, Math.floor(h * dpr));
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    // Sphere sits right-of-center on desktop, centered on small screens.
+    // Sphere sits lower-right on desktop (below the headline band),
+    // centered on small screens.
     const small = w < 700;
-    cx = small ? w * 0.5 : w * 0.72;
-    cy = small ? h * 0.42 : h * 0.4;
-    radius = Math.min(w, h) * (small ? 0.34 : 0.36);
+    cx = small ? w * 0.5 : w * 0.78;
+    cy = small ? h * 0.5 : h * 0.68;
+    radius = Math.min(w, h) * (small ? 0.52 : 0.58);
   }
 
   let angle = 0.6;

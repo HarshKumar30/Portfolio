@@ -3,8 +3,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { setupPinIndex } from '../lib/pin';
 
-// HK portfolio — Elementis-style motion: smooth scroll, masked reveals,
-// parallax blobs, pinned project index. Content is visible by default;
+// HK portfolio — iverson.inc inspired: smooth scroll, masked display reveals,
+// rise-and-fade sections, magnetic CTAs. Content is visible by default;
 // all animation is progressive enhancement.
 (() => {
   gsap.registerPlugin(ScrollTrigger);
@@ -21,6 +21,42 @@ import { setupPinIndex } from '../lib/pin';
   document.querySelectorAll<HTMLImageElement>('img[data-icon]').forEach((img) => {
     if (img.complete && img.naturalWidth === 0) img.remove();
     else img.addEventListener('error', () => img.remove(), { once: true });
+  });
+
+  // Copy-email buttons with clipboard fallback.
+  document.querySelectorAll<HTMLButtonElement>('.copy-mail').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.copy || '';
+      let ok = false;
+      try {
+        await navigator.clipboard.writeText(text);
+        ok = true;
+      } catch {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          ok = document.execCommand('copy');
+          ta.remove();
+        } catch {
+          ok = false;
+        }
+      }
+      if (ok) {
+        const label = btn.getAttribute('aria-label') || 'Copy';
+        btn.classList.add('done');
+        btn.setAttribute('aria-label', 'Copied!');
+        btn.title = 'Copied!';
+        window.setTimeout(() => {
+          btn.classList.remove('done');
+          btn.setAttribute('aria-label', label);
+          btn.title = label;
+        }, 1600);
+      }
+    });
   });
 
   // Smooth scroll (skipped for reduced motion)
@@ -98,10 +134,8 @@ import { setupPinIndex } from '../lib/pin';
     heroPlayed = true;
     const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
     tl.from('[data-hero-line] > span', { yPercent: 115, duration: 1.1, stagger: 0.12 })
-      .from('.hero-top-row', { y: 24, autoAlpha: 0, duration: 0.8 }, '-=0.7')
-      .from('.hero-left', { y: 40, autoAlpha: 0, duration: 0.9 }, '-=0.7')
-      .from('.profile-card', { y: 60, autoAlpha: 0, rotate: 4, duration: 1 }, '-=0.75')
-      .from('.hero-banner', { y: 30, autoAlpha: 0, duration: 0.8 }, '-=0.7');
+      .from('.hero-eyebrow', { y: 24, autoAlpha: 0, duration: 0.8 }, '-=0.7')
+      .from('.hero-sub > div', { y: 40, autoAlpha: 0, duration: 0.9, stagger: 0.1 }, '-=0.7');
     ScrollTrigger.refresh();
   }
 
@@ -147,7 +181,7 @@ import { setupPinIndex } from '../lib/pin';
     }, 4000);
   }
 
-  // Scroll reveals (Elementis-style rise + fade)
+  // Scroll reveals (rise + fade)
   if (!reduced) {
     gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) => {
       // Skip hero pieces handled by the intro timeline
@@ -160,20 +194,39 @@ import { setupPinIndex } from '../lib/pin';
         scrollTrigger: { trigger: el, start: 'top 88%', once: true },
       });
     });
+  }
 
-    // Hero blob parallax
-    gsap.utils.toArray<HTMLElement>('.hero-blob').forEach((blob, i) => {
-      gsap.to(blob, {
-        yPercent: i % 2 === 0 ? 24 : -20,
-        ease: 'none',
-        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+  // Pinned work index (rebuilt by github.ts after live repos render)
+  setupPinIndex();
+
+  // Scrollspy — highlight the nav link of the section in view.
+  const navAnchors = new Map<string, HTMLAnchorElement>();
+  document.querySelectorAll<HTMLAnchorElement>('.nav-links a[href^="#"]').forEach((a) => {
+    const href = a.getAttribute('href');
+    if (href && href.length > 1) navAnchors.set(href.slice(1), a);
+  });
+  if (navAnchors.size > 0) {
+    const setActive = (id: string | null) => {
+      navAnchors.forEach((a, key) => {
+        const on = key === id;
+        a.classList.toggle('active', on);
+        if (on) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
+      });
+    };
+    navAnchors.forEach((_, id) => {
+      const section = document.getElementById(id);
+      if (!section) return;
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 55%',
+        end: 'bottom 55%',
+        onToggle: (self) => {
+          if (self.isActive) setActive(id);
+        },
       });
     });
   }
-
-  // Pinned project index — sticky panel counts cards as they pass
-  // (rebuilt by github.ts after live repos render)
-  setupPinIndex();
 
   // Animated counters
   document.querySelectorAll<HTMLElement>('.count').forEach((el) => {
@@ -212,19 +265,4 @@ import { setupPinIndex } from '../lib/pin';
       btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.5)' }));
     });
   }
-
-  // Contact form -> mailto
-  const form = document.getElementById('contactForm') as HTMLFormElement | null;
-  if (form)
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const n = (document.getElementById('cfName') as HTMLInputElement).value.trim();
-      const em = (document.getElementById('cfEmail') as HTMLInputElement).value.trim();
-      const m = (document.getElementById('cfMsg') as HTMLTextAreaElement).value.trim();
-      const note = document.getElementById('cfNote');
-      const subject = encodeURIComponent(`Hello Harsh — message from ${n}`);
-      const body = encodeURIComponent(`Name: ${n}\nEmail: ${em}\n\n${m}`);
-      window.location.href = `mailto:hk40048900@email.com?subject=${subject}&body=${body}`;
-      if (note) note.textContent = `Opening your mail app… talk soon, ${n || 'friend'} ✓`;
-    });
 })();

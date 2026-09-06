@@ -1,8 +1,8 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Pinned project index — the sticky panel counts cards as they pass.
-// Re-runnable: github.ts calls setupPinIndex() after live-rendering repos.
+// Pinned work index — the sticky panel counts rows as they pass.
+// Re-runnable: github.ts calls setupPinIndex() after live repos render.
 gsap.registerPlugin(ScrollTrigger);
 
 let pinTriggers: ScrollTrigger[] = [];
@@ -15,16 +15,16 @@ export function setupPinIndex(): void {
   const pinCurrent = document.getElementById('pinCurrent');
   const pinProgress = document.getElementById('pinProgress');
   const pinTotal = document.querySelector('.pin-left small');
-  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-project-index]'));
-  if (cards.length === 0) return;
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('[data-project-index]'));
+  if (rows.length === 0) return;
 
-  const total = cards.length;
+  const total = rows.length;
   if (pinTotal) pinTotal.textContent = ` / ${String(total).padStart(2, '0')}`;
-  cards.forEach((card) => {
-    const idx = Number(card.dataset.projectIndex || 0);
+  rows.forEach((row) => {
+    const idx = Number(row.dataset.projectIndex || 0);
     pinTriggers.push(
       ScrollTrigger.create({
-        trigger: card,
+        trigger: row,
         start: 'top 62%',
         end: 'bottom 62%',
         onToggle: (self) => {

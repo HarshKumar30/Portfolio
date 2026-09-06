@@ -1,72 +1,109 @@
 ---
 ---
-<section class="section section-projects" id="projects">
+<section class="section" id="work">
   <div class="sec-head" data-reveal>
-    <p class="kicker">SELECTED WORK — 2024 → 2026</p>
-    <h2>Selected<br /><span class="fill-violet">Work</span></h2>
-    <p class="sec-sub">A mix of full-stack apps, hackathon builds and experiments — each one designed, built and shipped end to end.</p>
+    <p class="caption"><span class="sec-index">05</span>Selected work — 2024 → 2026</p>
+    <h2>Work that ships,<br />not decks<span class="accent">.</span></h2>
+    <p class="sec-sub">Full-stack apps, hackathon builds and experiments — pulled live from GitHub, each one designed, built and shipped end to end.</p>
   </div>
 
   <div class="pin-layout">
     <aside class="pin-left" data-reveal>
-      <p class="kicker">FEATURED PROJECTS</p>
+      <p class="caption">Featured work</p>
       <div class="pin-index"><span id="pinCurrent">01</span><small> / 06</small></div>
       <div class="pin-bar"><div id="pinProgress"></div></div>
-      <p>Two deep-dives plus four builds from hackathons and the lab. Scroll to walk through each one — stack, story and outcome.</p>
-      <div class="pin-blob" aria-hidden="true"></div>
+      <p>Live from GitHub — top repositories by stars, most recent push breaks ties. Scroll to walk through each one.</p>
     </aside>
 
-    <div class="project-list">
-      <article class="project-card featured" data-reveal data-project-index="0">
-        <div class="pj-top"><span class="pnum">01 — FEATURED</span><span class="pyear">2025 // WEB</span></div>
-        <h3>Personal Developer Portfolio Website</h3>
-        <p class="pj-desc">Fully responsive React single-page app showcasing projects, skills &amp; background. Dark/light theme toggle, SEO best practices, GitHub Pages + Actions CI/CD, reusable component architecture, mobile-first layout.</p>
-        <div class="tags"><span>React.js</span><span>CSS3</span><span>GitHub Pages</span><span>Actions</span><span>SEO</span></div>
-        <div class="pj-foot">
-          <a href="https://github.com/HarshKumar30/Portfolio" target="_blank" rel="noopener">View Code ↗</a>
-          <span class="pnote">Outcome — Lighthouse 100</span>
+    <div class="project-list work-list">
+      <article class="work-row" data-reveal data-project-index="0">
+        <div class="work-idx">01<b>//06</b></div>
+        <div>
+          <h3 class="work-title"><a href="https://github.com/HarshKumar30/Portfolio" target="_blank" rel="noopener">Portfolio Website</a></h3>
+          <p class="work-brief">Fully responsive single-page app showcasing projects, skills and background. Theme system, SEO best practices, GitHub Pages + Actions CI/CD, reusable component architecture, mobile-first layout.</p>
+          <div class="work-tags"><span class="tag">Astro</span><span class="tag">TypeScript</span><span class="tag">CI/CD</span><span class="tag">SEO</span></div>
+        </div>
+        <div class="work-side">
+          <span class="work-meta">2025 // Web</span>
+          <a class="work-link" href="https://github.com/HarshKumar30/Portfolio" target="_blank" rel="noopener">View code ↗</a>
         </div>
       </article>
 
-      <article class="project-card" data-reveal data-project-index="1">
-        <div class="pj-top"><span class="pnum">02</span><span class="pyear">2025 // FULL-STACK</span></div>
-        <h3>Task Tracker Application</h3>
-        <p class="pj-desc">Full-stack task manager — Python/Flask backend + dynamic JS frontend. Normalized SQLite schema (priority, due date, status, category), optimized filter/sort queries, RESTful JSON API, drag-and-drop reorder, deadline highlighting, persistent state.</p>
-        <div class="tags"><span>Python</span><span>Flask</span><span>SQLite</span><span>JavaScript</span><span>REST API</span></div>
-        <div class="pj-foot">
-          <a href="https://github.com/HarshKumar30" target="_blank" rel="noopener">View Code ↗</a>
-          <span class="pnote">Outcome — Full CRUD + API</span>
+      <article class="work-row" data-reveal data-project-index="1">
+        <div class="work-idx">02<b>//06</b></div>
+        <div>
+          <h3 class="work-title"><a href="https://github.com/HarshKumar30" target="_blank" rel="noopener">Task Tracker</a></h3>
+          <p class="work-brief">Full-stack task manager — Python backend with a dynamic JS frontend. Normalized schema, optimized filter and sort queries, RESTful JSON API, drag-and-drop reorder, deadline highlighting.</p>
+          <div class="work-tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLite</span><span class="tag">REST API</span></div>
+        </div>
+        <div class="work-side">
+          <span class="work-meta">2025 // Full-stack</span>
+          <a class="work-link" href="https://github.com/HarshKumar30" target="_blank" rel="noopener">View code ↗</a>
         </div>
       </article>
 
-      <div class="project-grid">
-        <article class="project-card mini" data-reveal data-project-index="2">
-          <div class="pj-top"><span class="pnum">03</span><span class="pyear">HACKATHON // IOT</span></div>
-          <h3>LPG Leakage Detection</h3>
-          <p>Arduino / ESP32 sensor rig with real-time alerts. Designed and demoed in 24 hours.</p>
-          <div class="tags"><span>IoT</span><span>Arduino</span><span>ESP32</span></div>
-        </article>
-        <article class="project-card mini" data-reveal data-project-index="3">
-          <div class="pj-top"><span class="pnum">04</span><span class="pyear">HACKATHON // SECURITY</span></div>
-          <h3>Doc Security Suite</h3>
-          <p>Steganography + cryptographic signing for tamper-proof documents.</p>
-          <div class="tags"><span>Python</span><span>Crypto</span><span>Stegano</span></div>
-        </article>
-        <article class="project-card mini" data-reveal data-project-index="4">
-          <div class="pj-top"><span class="pnum">05</span><span class="pyear">HACKATHON // A11Y</span></div>
-          <h3>Eye-Tracking Keyboard</h3>
-          <p>Assistive keyboard powered by WebGazer.js gaze prediction in-browser.</p>
-          <div class="tags"><span>JS</span><span>WebGazer.js</span><span>A11y</span></div>
-        </article>
-        <article class="project-card mini" data-reveal data-project-index="5">
-          <div class="pj-top"><span class="pnum">06</span><span class="pyear">LAB // ML</span></div>
-          <h3>Financial Time-Series Prediction</h3>
-          <p>LSTM &amp; Transformer architectures for market forecasting. Final-year project.</p>
-          <div class="tags"><span>Python</span><span>LSTM</span><span>Transformer</span></div>
-        </article>
-      </div>
+      <article class="work-row" data-reveal data-project-index="2">
+        <div class="work-idx">03<b>//06</b></div>
+        <div>
+          <h3 class="work-title">LPG Leakage Detection</h3>
+          <p class="work-brief">Arduino / ESP32 sensor rig with real-time alerts. Designed and demoed in 24 hours.</p>
+          <div class="work-tags"><span class="tag">IoT</span><span class="tag">Arduino</span><span class="tag">ESP32</span></div>
+        </div>
+        <div class="work-side">
+          <span class="work-meta">Hackathon</span>
+        </div>
+      </article>
+
+      <article class="work-row" data-reveal data-project-index="3">
+        <div class="work-idx">04<b>//06</b></div>
+        <div>
+          <h3 class="work-title">Doc Security Suite</h3>
+          <p class="work-brief">Steganography plus cryptographic signing for tamper-proof documents.</p>
+          <div class="work-tags"><span class="tag">Python</span><span class="tag">Crypto</span></div>
+        </div>
+        <div class="work-side">
+          <span class="work-meta">Hackathon</span>
+        </div>
+      </article>
+
+      <article class="work-row" data-reveal data-project-index="4">
+        <div class="work-idx">05<b>//06</b></div>
+        <div>
+          <h3 class="work-title">Eye-Tracking Keyboard</h3>
+          <p class="work-brief">Assistive keyboard powered by in-browser gaze prediction.</p>
+          <div class="work-tags"><span class="tag">JavaScript</span><span class="tag">WebGazer.js</span></div>
+        </div>
+        <div class="work-side">
+          <span class="work-meta">Hackathon</span>
+        </div>
+      </article>
+
+      <article class="work-row" data-reveal data-project-index="5">
+        <div class="work-idx">06<b>//06</b></div>
+        <div>
+          <h3 class="work-title">Time-Series Prediction</h3>
+          <p class="work-brief">LSTM and Transformer architectures for market forecasting.</p>
+          <div class="work-tags"><span class="tag">Python</span><span class="tag">LSTM</span><span class="tag">Transformer</span></div>
+        </div>
+        <div class="work-side">
+          <span class="work-meta">Lab // ML</span>
+        </div>
+      </article>
     </div>
   </div>
 
+  <div class="heatmap-wrap gh-wrap" data-reveal id="ghActivity" hidden>
+    <div class="hm-head">
+      <p>GITHUB COMMITS — LAST 90 DAYS</p>
+      <div class="hm-legend"><span>Less</span><i class="lv0"></i><i class="lv1"></i><i class="lv2"></i><i class="lv3"></i><i class="lv4"></i><span>More</span></div>
+    </div>
+    <div class="heatmap-scroll">
+      <div class="hm-months" id="ghMonths" aria-hidden="true"></div>
+      <div class="heatmap" id="ghHeatmap" role="img" aria-label="GitHub commit activity heatmap"></div>
+    </div>
+    <p class="hm-meta" id="ghMeta"></p>
+  </div>
+
   <script src="../scripts/github.ts"></script>
+  <script src="../scripts/activity.ts"></script>
 </section>
