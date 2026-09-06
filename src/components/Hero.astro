@@ -1,377 +1,60 @@
 ---
-const stats = [
-  { number: '100+', label: 'Problems Solved' },
-  { number: '4', label: 'Projects Built' },
-  { number: '1st', label: 'CODE AARAMBH Rank' },
-  { number: '7.5', label: 'CGPA' },
-];
+// Hero — oversized type + profile card
 ---
+<section class="hero">
+  <div class="hero-blob b1" aria-hidden="true"></div>
+  <div class="hero-blob b2" aria-hidden="true"></div>
 
-<script>
-  import '../scripts/hero3d.js';
-</script>
-
-<section class="hero" id="hero" data-section>
-  <div class="hero__bg" aria-hidden="true">
-    <div class="hero__blob"></div>
+  <div class="hero-top-row" data-reveal>
+    <div class="pill"><span class="dot"></span> SOFTWARE ENGINEER — SINCE 2022</div>
+    <div class="pill ghost">📍 PRAYAGRAJ, INDIA</div>
+    <div class="pill accent">OPEN TO WORK // 2026</div>
   </div>
 
-  <div class="hero__canvas-wrap" aria-hidden="true">
-    <canvas id="hero-canvas"></canvas>
-  </div>
+  <h1 class="hero-title">
+    <span class="mask" data-hero-line><span>HARSH</span></span>
+    <span class="mask outline" data-hero-line><span>KUMAR<i class="coral-dot">.</i></span></span>
+  </h1>
 
-  <div class="hero__content">
-    <p class="hero__eyebrow" data-reveal>Portfolio — 2026</p>
-
-    <h1 class="hero__title" data-split>
-      <span class="hero__line hero__line--small" data-line>HARSH</span>
-      <span class="hero__line hero__line--large" data-line>KUMAR</span>
-    </h1>
-
-    <p class="hero__role" data-reveal>
-      <span class="hero__role-text">Full-Stack Developer &amp; Problem Solver</span>
-      <span class="hero__cursor">_</span>
-    </p>
-
-    <div class="hero__bottom" data-reveal>
-      <p class="hero__location">
-        Prayagraj, India
-        <span class="hero__dot"></span>
-      </p>
-      <a href="#projects" class="hero__scroll" data-hover>
-        <span>Scroll to explore</span>
-        <span class="hero__arrow">↓</span>
-      </a>
+  <div class="hero-bottom">
+    <div class="hero-left" data-reveal>
+      <p class="hero-role">2026 FULL-STACK DEVELOPER<br /><strong>REACT // PYTHON // REST APIS</strong></p>
+      <p class="hero-desc">I build full-stack web apps, RESTful APIs and data-driven products — clean, maintainable code, thoughtful interfaces and reliable backends.</p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn coral magnetic">View Projects</a>
+        <a href="mailto:hk40048900@email.com" class="btn outline magnetic">Get in Touch</a>
+      </div>
+      <div class="hero-meta">
+        <span>+91 95593 82681</span><i>/</i>
+        <span>hk40048900@email.com</span><i>/</i>
+        <a href="https://linkedin.com/in/harsh-kumar" target="_blank" rel="noopener">linkedin.com/in/harsh-kumar</a>
+      </div>
     </div>
 
-    <div class="hero__stats" data-reveal>
-      {
-        stats.map((stat) => (
-          <div class="hero__stat" data-stat>
-            <span class="hero__stat-number">{stat.number}</span>
-            <span class="hero__stat-label">{stat.label}</span>
-          </div>
-        ))
-      }
-    </div>
-  </div>
-
-  <div class="hero__marquee" aria-hidden="true">
-    <div class="hero__marquee-track">
-      <span>DEVELOPER</span><span class="hero__marquee-star">✳</span>
-      <span>DESIGNER</span><span class="hero__marquee-star">✳</span>
-      <span>CREATOR</span><span class="hero__marquee-star">✳</span>
-      <span>CODER</span><span class="hero__marquee-star">✳</span>
-      <span>DEVELOPER</span><span class="hero__marquee-star">✳</span>
-      <span>DESIGNER</span><span class="hero__marquee-star">✳</span>
-      <span>CREATOR</span><span class="hero__marquee-star">✳</span>
-      <span>CODER</span><span class="hero__marquee-star">✳</span>
+    <div class="profile-card" data-reveal>
+      <div class="pc-header">
+        <span>HK — PROFILE</span><span class="live"><i></i>AVAILABLE</span>
+      </div>
+      <div class="pc-photo">
+        <div class="pc-initials">HK</div>
+        <div class="pc-badge">OPEN TO WORK</div>
+        <div class="pc-stripes"></div>
+      </div>
+      <div class="pc-rows">
+        <div><span>ROLE</span><b>FULL-STACK DEVELOPER</b></div>
+        <div><span>EDUCATION</span><b>BSc CSE — '28</b></div>
+        <div><span>STACK</span><b class="hl">REACT / DJANGO</b></div>
+        <div><span>LOCATION</span><b>PRAYAGRAJ, INDIA</b></div>
+      </div>
+      <div class="pc-sign">Harsh Kumar</div>
     </div>
   </div>
 
-  <div class="hero__stats">
-    {
-      stats.map((stat, i) => (
-        <div class="hero__stat" data-stat>
-          <span class="hero__stat-number">{stat.number}</span>
-          <span class="hero__stat-label">{stat.label}</span>
-        </div>
-      ))
-    }
+  <div class="hero-banner" data-reveal>
+    <div>
+      <p>AVAILABLE FOR 2026</p>
+      <h3>Software Engineering Roles — 2026</h3>
+    </div>
+    <a href="#contact">Let's Work Together ↗</a>
   </div>
 </section>
-
-<style>
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .hero__bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-
-  .hero__blob {
-    position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 55vw;
-    height: 55vw;
-    background:
-      radial-gradient(circle at 25% 35%, rgba(34, 211, 238, 0.18), transparent 45%),
-      radial-gradient(circle at 60% 65%, rgba(168, 85, 247, 0.16), transparent 45%),
-      radial-gradient(circle at 85% 35%, rgba(236, 72, 153, 0.15), transparent 45%);
-    filter: blur(40px);
-    animation: blobFloat 12s ease-in-out infinite;
-  }
-
-  @keyframes blobFloat {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-    }
-    33% {
-      transform: translate(-4vw, 4vh) scale(1.08);
-    }
-    66% {
-      transform: translate(3vw, -3vh) scale(0.95);
-    }
-  }
-
-  .hero__canvas-wrap {
-    position: absolute;
-    top: 50%;
-    right: 2%;
-    width: 44vw;
-    height: 44vw;
-    max-width: 640px;
-    max-height: 640px;
-    transform: translateY(-50%);
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  #hero-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  .hero__content {
-    position: relative;
-    z-index: 2;
-    padding: 0 3rem;
-  }
-
-  .hero__eyebrow {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    color: #22d3ee;
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-  }
-
-  .hero__title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    line-height: 0.95;
-    text-transform: uppercase;
-  }
-
-  .hero__line {
-    display: block;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .hero__line--small {
-    font-size: clamp(3.5rem, 10vw, 8rem);
-    color: rgba(255, 255, 255, 0.92);
-    margin-left: 0.5em;
-  }
-
-  .hero__line--large {
-    font-size: clamp(4.5rem, 13vw, 11rem);
-    background: linear-gradient(100deg, #22d3ee, #a855f7 55%, #ec4899);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.14);
-    margin-left: -0.05em;
-  }
-
-  @supports not (-webkit-text-stroke: 1px black) {
-    .hero__line--large {
-      color: #a855f7;
-    }
-  }
-
-  .hero__role {
-    margin-top: 2rem;
-    font-size: clamp(1rem, 2vw, 1.5rem);
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.8);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .hero__cursor {
-    display: inline-block;
-    width: 0.6ch;
-    color: #22d3ee;
-    animation: blink 1s steps(2) infinite;
-  }
-
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
-  }
-
-  .hero__bottom {
-    margin-top: 3.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 600px;
-  }
-
-  .hero__location {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-  }
-
-  .hero__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #22d3ee;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% {
-      opacity: 1;
-      box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.5);
-    }
-    50% {
-      opacity: 0.5;
-      box-shadow: 0 0 0 8px rgba(34, 211, 238, 0);
-    }
-  }
-
-  .hero__scroll {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    transition: color 0.3s;
-  }
-
-  .hero__scroll:hover {
-    color: #22d3ee;
-  }
-
-  .hero__arrow {
-    font-size: 1.2rem;
-    animation: bounce 1.6s ease-in-out infinite;
-  }
-
-  @keyframes bounce {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(6px);
-    }
-  }
-
-  .hero__marquee {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 2;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 1rem 0;
-    overflow: hidden;
-  }
-
-  .hero__marquee-track {
-    display: flex;
-    gap: 3rem;
-    white-space: nowrap;
-    animation: marquee 22s linear infinite;
-    font-family: 'Syne', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: rgba(255, 255, 255, 0.35);
-  }
-
-  .hero__marquee-star {
-    color: #a855f7;
-  }
-
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
-  .hero__stats {
-    margin-top: 3rem;
-    display: flex;
-    gap: 3rem;
-    flex-wrap: wrap;
-  }
-
-  .hero__stat {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    border-left: 2px solid rgba(34, 211, 238, 0.4);
-    padding-left: 1rem;
-  }
-
-  .hero__stat-number {
-    display: block;
-    font-family: 'Syne', sans-serif;
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: #fff;
-  }
-
-  .hero__stat-label {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: rgba(255, 255, 255, 0.5);
-  }
-
-  @media (max-width: 768px) {
-    .hero__content {
-      padding: 0 1.25rem;
-    }
-
-    .hero__canvas-wrap {
-      width: 90vw;
-      height: 90vw;
-      right: 50%;
-      top: 55%;
-      transform: translate(50%, -50%);
-      opacity: 0.5;
-    }
-
-    .hero__bottom {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1.5rem;
-    }
-
-    .hero__stats {
-      gap: 1.5rem;
-    }
-  }
-</style>

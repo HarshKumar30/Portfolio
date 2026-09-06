@@ -1,0 +1,104 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Harsh Kumar — Software Engineer',
+  description = 'Harsh Kumar — Full-stack Software Engineer from Prayagraj, India. React, Python, Flask, REST APIs. Clean, maintainable web apps.',
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23FF5C38'/><text x='50' y='68' font-size='48' font-family='Arial Black' font-weight='900' text-anchor='middle' fill='white'>H</text></svg>"
+    />
+  </head>
+  <body>
+    <!-- LOADER -->
+    <div id="loader" aria-hidden="true">
+      <div class="loader-inner">
+        <div class="loader-top"><span>HK // LOADING PORTFOLIO</span><span id="loader-pct">00</span></div>
+        <div class="loader-big" id="loader-big">HARSH KUMAR</div>
+        <div class="loader-bar"><div id="loader-fill"></div></div>
+        <div class="loader-sub">FULL-STACK // REACT — PYTHON — FLASK — REST</div>
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <header id="nav">
+      <a href="#home" class="logo">
+        <span class="logo-box">H</span>
+        <span class="logo-text">HARSH<span>KUMAR</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#coding">Coding</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#contact" class="nav-cta">Say Hello ↗</a>
+      </nav>
+      <button id="menuBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </header>
+
+    <!-- FULLSCREEN MENU -->
+    <div id="menu">
+      <div class="menu-blob" aria-hidden="true"></div>
+      <nav>
+        <a href="#home"><em>01</em>Home</a>
+        <a href="#projects"><em>02</em>Projects</a>
+        <a href="#coding"><em>03</em>Coding Profiles</a>
+        <a href="#about"><em>04</em>About</a>
+        <a href="#skills"><em>05</em>Skills</a>
+        <a href="#achievements"><em>06</em>Achievements</a>
+        <a href="#contact"><em>07</em>Contact</a>
+      </nav>
+      <div class="menu-foot">
+        <div>
+          <p>GET IN TOUCH</p>
+          <a href="mailto:hk40048900@email.com">hk40048900@email.com</a>
+        </div>
+        <div class="menu-socials">
+          <a href="https://linkedin.com/in/harsh-kumar" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="https://github.com/HarshKumar30" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://x.com/HarshKu94194256" target="_blank" rel="noopener">X ↗</a>
+          <a href="mailto:hk40048900@email.com">Email ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <slot />
+
+    <footer>
+      <div class="foot-top">
+        <a href="#home" class="logo"><span class="logo-box">H</span><span class="logo-text">HARSH<span>KUMAR</span></span></a>
+        <nav>
+          <a href="#projects">Projects</a><a href="#coding">Coding</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#achievements">Achievements</a><a href="#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="foot-big" aria-hidden="true">HARSH KUMAR</div>
+      <div class="foot-bottom">
+        <p>© <span id="year">2026</span> Harsh Kumar. All rights reserved. Designed &amp; built with care.</p>
+        <p class="foot-sig">Prayagraj, India</p>
+      </div>
+    </footer>
+
+    <script src="../scripts/site.ts"></script>
+  </body>
+</html>

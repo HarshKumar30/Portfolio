@@ -1,28 +1,27 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
+import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Marquee from '../components/Marquee.astro';
-import Education from '../components/Education.astro';
-import Achievements from '../components/Achievements.astro';
-import LeetCode from '../components/LeetCode.astro';
+import Manifesto from '../components/Manifesto.astro';
+import Stats from '../components/Stats.astro';
 import Projects from '../components/Projects.astro';
-import TechStack from '../components/TechStack.astro';
-import Hobbies from '../components/Hobbies.astro';
+import CodingProfiles from '../components/CodingProfiles.astro';
+import About from '../components/About.astro';
+import Skills from '../components/Skills.astro';
+import Achievements from '../components/Achievements.astro';
 import Contact from '../components/Contact.astro';
 ---
-
-<Layout title="Harsh Kumar — Portfolio">
-  <Nav />
-  <main>
+<Base>
+  <main id="home">
     <Hero />
     <Marquee />
-    <Education />
-    <Achievements />
-    <LeetCode />
+    <Manifesto />
+    <Stats />
     <Projects />
-    <TechStack />
-    <Hobbies />
+    <CodingProfiles />
+    <About />
+    <Skills />
+    <Achievements />
     <Contact />
   </main>
-</Layout>
+</Base>

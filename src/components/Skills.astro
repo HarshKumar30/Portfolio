@@ -1,0 +1,95 @@
+---
+const CDN = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons';
+const icon = (p: string) => `${CDN}/${p}`;
+
+interface Skill {
+  name: string;
+  icon?: string;
+}
+interface Group {
+  title: string;
+  tag: string;
+  skills: Skill[];
+}
+
+const groups: Group[] = [
+  {
+    title: 'Languages',
+    tag: 'WRITE',
+    skills: [
+      { name: 'C', icon: icon('c/c-original.svg') },
+      { name: 'Java', icon: icon('java/java-original.svg') },
+      { name: 'Python', icon: icon('python/python-original.svg') },
+      { name: 'HTML', icon: icon('html5/html5-original.svg') },
+      { name: 'CSS', icon: icon('css3/css3-original.svg') },
+      { name: 'JavaScript', icon: icon('javascript/javascript-original.svg') },
+      { name: 'TypeScript', icon: icon('typescript/typescript-original.svg') },
+      { name: 'SQL' },
+    ],
+  },
+  {
+    title: 'Frameworks',
+    tag: 'BUILD',
+    skills: [
+      { name: 'React', icon: icon('react/react-original.svg') },
+      { name: 'Astro', icon: icon('astro/astro-plain.svg') },
+      { name: 'Next.js', icon: icon('nextjs/nextjs-original.svg') },
+      { name: 'Express', icon: icon('express/express-original.svg') },
+      { name: 'Django', icon: icon('django/django-plain.svg') },
+    ],
+  },
+  {
+    title: 'Data & Cloud',
+    tag: 'SCALE',
+    skills: [
+      { name: 'MongoDB', icon: icon('mongodb/mongodb-original.svg') },
+      { name: 'MySQL', icon: icon('mysql/mysql-original.svg') },
+      { name: 'PostgreSQL', icon: icon('postgresql/postgresql-original.svg') },
+      { name: 'Redis', icon: icon('redis/redis-original.svg') },
+      { name: 'Firebase', icon: icon('firebase/firebase-plain.svg') },
+      { name: 'Pandas', icon: icon('pandas/pandas-original.svg') },
+      { name: 'scikit-learn', icon: icon('scikitlearn/scikitlearn-original.svg') },
+    ],
+  },
+  {
+    title: 'Tooling',
+    tag: 'SHIP',
+    skills: [
+      { name: 'Git', icon: icon('git/git-original.svg') },
+      { name: 'GitHub Actions', icon: icon('githubactions/githubactions-plain.svg') },
+      { name: 'Postman', icon: icon('postman/postman-plain.svg') },
+      { name: 'Vercel', icon: icon('vercel/vercel-original.svg') },
+    ],
+  },
+];
+---
+<section class="section-skills" id="skills">
+  <div class="section">
+    <div class="sec-head" data-reveal>
+      <p class="kicker">TOOLBOX — LANGUAGES, FRAMEWORKS, DATA &amp; CLOUD</p>
+      <h2>Skills<br /><span class="fill-coral">&amp; Tools</span></h2>
+    </div>
+    <div class="skills-grid skills-grid-4">
+      {
+        groups.map((g) => (
+          <div class="skill-card" data-reveal>
+            <h4>{g.title}</h4>
+            <div class="stack-grid">
+              {g.skills.map((s) => (
+                <span class="stack">
+                  {s.icon ? (
+                    <img src={s.icon} alt={`${s.name} logo`} loading="lazy" width="28" height="28" onerror="this.remove()" />
+                  ) : (
+                    <b class="stack-text">SQL</b>
+                  )}
+                  <i>{s.name}</i>
+                </span>
+              ))}
+            </div>
+            <span class="skill-tag">{g.tag}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
