@@ -28,6 +28,9 @@ if (list) {
 
   const prettyName = (name: string) => name.replace(/[-_]+/g, ' ');
 
+  /** Repo links must stay on github.com — never render another scheme. */
+  const safeUrl = (u: string) => (u.startsWith('https://github.com/') ? u : profiles.githubUrl);
+
   const card = (r: GhRepo, i: number, featured: boolean) => {
     const year = new Date(r.pushed_at).getFullYear();
     const desc = r.description?.trim() ||
@@ -43,7 +46,7 @@ if (list) {
       <p class="pj-desc">${escapeHtml(desc)}</p>
       <div class="tags">${tags}</div>
       <div class="pj-foot">
-        <a href="${r.html_url}" target="_blank" rel="noopener">View Code ↗</a>
+        <a href="${safeUrl(r.html_url)}" target="_blank" rel="noopener">View Code ↗</a>
         <span class="pnote">★ ${r.stargazers_count} · ⑂ ${r.forks_count} · ${escapeHtml(updated)}</span>
       </div>
     </article>`;
@@ -57,7 +60,7 @@ if (list) {
       <div class="pj-top"><span class="pnum">${String(i + 1).padStart(2, '0')}</span><span class="pyear">${year} // ${escapeHtml((r.language || 'CODE').toUpperCase())}</span></div>
       <h3>${escapeHtml(prettyName(r.name))}</h3>
       <p>${escapeHtml(desc)}</p>
-      <div class="tags"><span>★ ${r.stargazers_count}</span><span><a href="${r.html_url}" target="_blank" rel="noopener" style="font:inherit">View Code ↗</a></span></div>
+      <div class="tags"><span>★ ${r.stargazers_count}</span><span><a href="${safeUrl(r.html_url)}" target="_blank" rel="noopener" style="font:inherit">View Code ↗</a></span></div>
     </article>`;
   };
 

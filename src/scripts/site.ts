@@ -16,6 +16,13 @@ import { setupPinIndex } from '../lib/pin';
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+  // Broken skill icons: drop <img data-icon> that fail to load.
+  // Listener-based (no inline handlers) so a strict CSP stays viable.
+  document.querySelectorAll<HTMLImageElement>('img[data-icon]').forEach((img) => {
+    if (img.complete && img.naturalWidth === 0) img.remove();
+    else img.addEventListener('error', () => img.remove(), { once: true });
+  });
+
   // Smooth scroll (skipped for reduced motion)
   let lenis: Lenis | null = null;
   if (!reduced) {

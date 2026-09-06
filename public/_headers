@@ -1,0 +1,9 @@
+# Security headers — honored by Netlify and Cloudflare Pages.
+# (GitHub Pages ignores this file; Vercel needs the same values in vercel.json.)
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://api.github.com https://leetcode-stats.tashif.codes https://gfg-stats.tashif.codes; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains

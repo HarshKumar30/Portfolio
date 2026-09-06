@@ -78,7 +78,7 @@ const groups: Group[] = [
               {g.skills.map((s) => (
                 <span class="stack">
                   {s.icon ? (
-                    <img src={s.icon} alt={`${s.name} logo`} loading="lazy" width="28" height="28" onerror="this.remove()" />
+                    <img src={s.icon} alt={`${s.name} logo`} loading="lazy" width="28" height="28" data-icon />
                   ) : (
                     <b class="stack-text">SQL</b>
                   )}
