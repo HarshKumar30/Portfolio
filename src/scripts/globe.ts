@@ -1,4 +1,4 @@
-// Rotating dot-matrix globe → About section backdrop.
+// Rotating dot-matrix globe → hero backdrop.
 // Zero-dependency canvas: fibonacci sphere, orthographic projection,
 // continuous rotation around a tilted axis. Depth fades dots front→back.
 // Pauses offscreen / on hidden tab; static frame for reduced motion.
@@ -102,8 +102,8 @@
   resize();
   window.addEventListener('resize', resize);
 
-  // Pause when About scrolls out of view or the tab hides.
-  const host = canvas.closest('#about');
+  // Pause when the hero scrolls out of view or the tab hides.
+  const host = canvas.closest('.hero');
   if (host && 'IntersectionObserver' in window) {
     new IntersectionObserver(
       (entries) => {

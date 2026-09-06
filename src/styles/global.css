@@ -97,8 +97,15 @@ section[id]{scroll-margin-top:76px}
 .btn-line:hover{border-color:var(--accent);color:var(--accent)}
 .hero-meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:1.5rem;font-family:var(--font-m);font-size:.625rem;letter-spacing:.03rem;text-transform:uppercase;color:var(--faint)}
 .hero-meta a:hover{color:var(--accent)}
-.hero-media{display:flex;gap:1.5rem;align-items:center}
-.hero-photo{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#1b1b1b,#1c1c1c 60%,rgba(62,207,142,.35));border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:2rem;flex:none}
+.hero-media{display:flex;gap:1.5rem;align-items:flex-start;flex-direction:column}
+.quote-panel{border:1px solid var(--line);border-radius:var(--radius);padding:1.5rem;max-width:22rem;background:rgba(6,6,6,.55);backdrop-filter:blur(8px)}
+.quote-mark{display:block;font-family:var(--font-d);font-size:2.5rem;line-height:1;color:var(--accent)}
+.quote-text{font-family:var(--font-d);font-weight:400;font-size:clamp(1.25rem,2vw,1.5rem);line-height:115%;margin:.5rem 0 1rem;min-height:5.2em;transition:opacity .35s ease}
+.quote-fade .quote-text,.quote-fade .quote-mark{opacity:0}
+.quote-panel .caption{display:block}
+.scroll-pill{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-d);font-size:1rem;padding:12px 28px;border-radius:999px;background:var(--accent);color:var(--accent-ink);transition:transform .5s ease-out,background .3s}
+.scroll-pill:hover{transition-duration:.14s;transform:translateY(3px);background:var(--ink)}
+.scroll-pill span{font-size:1.1rem;line-height:1}
 .hero-who{display:flex;flex-direction:column;gap:4px}
 .hero-who b{font-weight:400;font-size:1.25rem}
 .hero-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:1.25rem;flex-wrap:wrap}
@@ -215,9 +222,7 @@ section[id]{scroll-margin-top:76px}
 .hm-meta{font-family:var(--font-m);font-size:.625rem;color:var(--faint);margin-top:12px;letter-spacing:.03rem;text-transform:uppercase}
 
 /* about */
-.section-about{border-top:1px solid var(--line);position:relative;overflow:clip}
-.section-about>*{position:relative;z-index:1}
-.section-about>#globe{z-index:0}
+.section-about{border-top:1px solid var(--line)}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:0}
 @media(max-width:900px){.about-grid{grid-template-columns:1fr}}
 .about-card p.big{font-family:var(--font-d);font-weight:400;font-size:clamp(1.25rem,2.5vw,2rem);line-height:110%;margin:1rem 0}

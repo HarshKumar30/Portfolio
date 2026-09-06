@@ -2,6 +2,7 @@
 // Hero — iverson voice: eyebrow, momentum headline, proof subline
 ---
 <section class="hero wrap" id="home">
+  <canvas id="globe" aria-hidden="true"></canvas>
   <div class="hero-blob b1" aria-hidden="true"></div>
   <div class="hero-blob b2" aria-hidden="true"></div>
   <div class="hero-eyebrow" data-reveal>
@@ -28,7 +29,11 @@
       </div>
     </div>
     <div class="hero-media" data-reveal>
-      <div class="hero-photo" aria-hidden="true">HK</div>
+      <div class="quote-panel" id="quotePanel" aria-live="polite">
+        <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="quote-text" id="quoteText">Ship early, refactor without fear.</p>
+        <span class="caption"><span id="quoteIdx">01</span> / 04</span>
+      </div>
       <div class="hero-who">
         <b>Harsh Kumar</b>
         <span class="caption">BSc CSE ’28 · 166+ problems solved</span>
@@ -37,7 +42,10 @@
   </div>
 
   <div class="hero-foot" data-reveal>
-    <span class="caption">Scroll</span>
+    <a href="#about" class="scroll-pill magnetic">Scroll to continue <span aria-hidden="true">↓</span></a>
     <span class="caption">React · Python · REST APIs</span>
   </div>
+
+  <script src="../scripts/globe.ts"></script>
+  <script src="../scripts/quotes.ts"></script>
 </section>
