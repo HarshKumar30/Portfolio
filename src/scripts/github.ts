@@ -1,82 +1,114 @@
-// Live GitHub repos → Work index.
-// Replaces the static fallback rows with the top non-fork repos by stars
-// (tie-break: most recently pushed). Static rows stay if the API fails.
-import { profiles, liveConfig } from '../config';
+// Live GitHub data → curated Work cards.
+// Matches config.projects by repo name, fills in live stars / push date /
+// language, and lazy-loads a screenshot per card. Static cards stay on failure.
+import { profiles, projects } from '../config';
 import { fetchCached, escapeHtml } from '../lib/api';
-import { setupPinIndex } from '../lib/pin';
 
 interface GhRepo {
   name: string;
-  full_name: string;
   html_url: string;
   description: string | null;
+  homepage: string | null;
   fork: boolean;
   stargazers_count: number;
-  forks_count: number;
   language: string | null;
   pushed_at: string;
-  topics?: string[];
 }
 
 const list = document.querySelector<HTMLElement>('.project-list');
 if (list) {
-  const fallbackHTML = list.innerHTML;
-  const total = liveConfig.repoCount;
-
-  // Skeleton while loading.
-  list.innerHTML =
-    `<article class="work-row" aria-hidden="true"><div></div><div class="skel"></div><div></div></article>`.repeat(2);
-
-  const prettyName = (name: string) => name.replace(/[-_]+/g, ' ');
+  // Static cards render immediately; live data enhances them in place.
 
   /** Repo links must stay on github.com — never render another scheme. */
   const safeUrl = (u: string) => (u.startsWith('https://github.com/') ? u : profiles.githubUrl);
+  /** Screenshot target: explicit site, else repo homepage, else repo page. */
+  const shotTarget = (site: string | undefined, r: GhRepo) => {
+    const cands = [site, r.homepage, r.html_url];
+    for (const c of cands) {
+      if (c && /^https?:\/\//i.test(c)) return c;
+    }
+    return r.html_url;
+  };
+  const shotUrl = (target: string) =>
+    `https://api.microlink.io?url=${encodeURIComponent(target)}&screenshot=true&meta=false&embed=screenshot.url`;
 
-  const row = (r: GhRepo, i: number) => {
-    const year = new Date(r.pushed_at).getFullYear();
-    const desc =
-      r.description?.trim() ||
-      (r.language
-        ? `An open-source ${escapeHtml(r.language)} project from my GitHub.`
-        : 'An open-source project from my GitHub.');
-    const tags = [
-      r.language ? `<span class="tag">${escapeHtml(r.language)}</span>` : '',
-      ...(r.topics || []).slice(0, 3).map((t) => `<span class="tag">${escapeHtml(t)}</span>`),
-    ].join('');
-    return `<article class="work-row live-in" data-project-index="${i}">
-      <div class="work-idx">${String(i + 1).padStart(2, '0')}<b>//${String(total).padStart(2, '0')}</b></div>
-      <div>
-        <h3 class="work-title"><a href="${safeUrl(r.html_url)}" target="_blank" rel="noopener">${escapeHtml(prettyName(r.name))}</a></h3>
-        <p class="work-brief">${escapeHtml(desc)}</p>
-        <div class="work-tags">${tags}</div>
-      </div>
-      <div class="work-side">
-        <span class="work-meta">${year} // ★ ${r.stargazers_count}</span>
-        <a class="work-link" href="${safeUrl(r.html_url)}" target="_blank" rel="noopener">View code ↗</a>
-      </div>
-    </article>`;
+  /** Lazy-load each card's screenshot only when it scrolls into view. */
+  const lazyShots = () => {
+    const cards = Array.from(list.querySelectorAll<HTMLElement>('.proj-card[data-shot]'));
+    if (cards.length === 0) return;
+    const show = (card: HTMLElement) => {
+      if (card.dataset.shotDone) return;
+      card.dataset.shotDone = '1';
+      const url = card.dataset.shot || '';
+      const frame = card.querySelector('.shot');
+      if (!url || !frame) return;
+      const img = document.createElement('img');
+      img.className = 'shot-img';
+      img.alt = '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      const timer = window.setTimeout(() => img.remove(), 15000);
+      img.addEventListener('load', () => {
+        window.clearTimeout(timer);
+        frame.prepend(img);
+        requestAnimationFrame(() => frame.classList.add('shot-live'));
+      });
+      img.addEventListener('error', () => {
+        window.clearTimeout(timer);
+        img.remove(); // fallback art underneath stays visible
+      });
+      img.src = url;
+    };
+    if (!('IntersectionObserver' in window)) {
+      cards.forEach(show);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            show(e.target as HTMLElement);
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { rootMargin: '200px' },
+    );
+    cards.forEach((c) => io.observe(c));
   };
 
   fetchCached<GhRepo[]>('hk-gh-repos', `https://api.github.com/users/${profiles.githubUser}/repos?per_page=100`)
     .then((repos) => {
       if (!repos || repos.length === 0) throw new Error('empty');
-      const mine = repos
-        .filter((r) => !r.fork && r.name.toLowerCase() !== profiles.githubUser.toLowerCase())
-        .sort(
-          (a, b) =>
-            b.stargazers_count - a.stargazers_count ||
-            new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime(),
-        )
-        .slice(0, total);
-      if (mine.length === 0) throw new Error('empty');
-      list.innerHTML = mine.map((r, i) => row(r, i)).join('');
-      setupPinIndex();
+      const byName = new Map(repos.map((r) => [r.name.toLowerCase(), r]));
+      let matched = 0;
+      projects.forEach((p) => {
+        const r = byName.get(p.repo.toLowerCase());
+        const card = list.querySelector<HTMLElement>(`.proj-card[data-repo="${CSS.escape(p.repo)}"]`);
+        if (!r || !card) return;
+        matched += 1;
+        // Live stars + push date.
+        const note = card.querySelector('.pnote');
+        if (note) {
+          const updated = new Date(r.pushed_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+          note.textContent = `★ ${r.stargazers_count} · ${updated}`;
+        }
+        const link = card.querySelector<HTMLAnchorElement>('.pj-foot a');
+        if (link) link.href = safeUrl(r.html_url);
+        const titleLink = card.querySelector<HTMLAnchorElement>('.proj-body h3 a, h3 a');
+        if (titleLink) titleLink.href = safeUrl(r.html_url);
+        // Screenshot target for lazy loading.
+        card.dataset.shot = shotUrl(shotTarget(p.site, r));
+      });
+      if (matched === 0) throw new Error('empty');
+      lazyShots();
       window.dispatchEvent(new Event('resize'));
     })
     .catch(() => {
-      // API failed — restore the curated static rows.
-      list.innerHTML = fallbackHTML;
-      setupPinIndex();
+      // API failed — curated static cards (with fallback art) stay as-is.
       window.dispatchEvent(new Event('resize'));
     });
+
+  // Static fallback also gets screenshots if the fetch failed late? No —
+  // keep it simple: screenshots only enhance successfully matched cards.
 }

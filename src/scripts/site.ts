@@ -1,7 +1,6 @@
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { setupPinIndex } from '../lib/pin';
 
 // HK portfolio — iverson.inc inspired: smooth scroll, masked display reveals,
 // rise-and-fade sections, magnetic CTAs. Content is visible by default;
@@ -196,9 +195,6 @@ import { setupPinIndex } from '../lib/pin';
     });
   }
 
-  // Pinned work index (rebuilt by github.ts after live repos render)
-  setupPinIndex();
-
   // Scrollspy — highlight the nav link of the section in view.
   const navAnchors = new Map<string, HTMLAnchorElement>();
   document.querySelectorAll<HTMLAnchorElement>('.nav-links a[href^="#"]').forEach((a) => {
@@ -263,6 +259,19 @@ import { setupPinIndex } from '../lib/pin';
         gsap.to(btn, { x: x * 0.15, y: y * 0.2, duration: 0.4, ease: 'power2.out' });
       });
       btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.5)' }));
+    });
+
+    // 3D tilt on project cards (fine pointers only)
+    document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
+      card.addEventListener('mousemove', (e: MouseEvent) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        gsap.to(card, { rotateY: px * 7, rotateX: -py * 7, y: -4, duration: 0.5, ease: 'power2.out', transformPerspective: 900 });
+      });
+      card.addEventListener('mouseleave', () =>
+        gsap.to(card, { rotateY: 0, rotateX: 0, y: 0, duration: 0.7, ease: 'elastic.out(1,0.5)' }),
+      );
     });
   }
 })();

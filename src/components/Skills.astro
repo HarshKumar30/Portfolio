@@ -73,29 +73,26 @@ const groups: Group[] = [
       <p class="caption"><span class="sec-index">06</span>Services — what I bring to a team</p>
     <h2>Everything a product<br />needs to <span class="accent">ship.</span></h2>
   </div>
-  {
-    groups.map((g) => (
-      <div class="svc-row" data-reveal>
-        <div class="svc-num">{g.num}</div>
-        <div>
+  <div class="skills-cols">
+    {
+      groups.map((g) => (
+        <div class="skill-col" data-reveal>
+          <span class="svc-num">{g.num}</span>
           <h3 class="svc-title">{g.title}</h3>
-        </div>
-        <div>
-          <p class="svc-desc">{g.desc}</p>
-          <div class="stack-grid">
+          <ul class="stack-list">
             {g.skills.map((s) => (
-              <span class="stack">
+              <li class="stack-row">
                 {s.icon ? (
                   <img src={s.icon} alt={`${s.name} logo`} loading="lazy" width="22" height="22" data-icon />
                 ) : (
                   <b class="stack-text">SQL</b>
                 )}
                 <i>{s.name}</i>
-              </span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
-      </div>
-    ))
-  }
+      ))
+    }
+  </div>
 </section>

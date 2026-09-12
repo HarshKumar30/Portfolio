@@ -4,106 +4,94 @@
   <div class="sec-head" data-reveal>
     <p class="caption"><span class="sec-index">05</span>Selected work — 2024 → 2026</p>
     <h2>Work that ships,<br />not decks<span class="accent">.</span></h2>
-    <p class="sec-sub">Full-stack apps, hackathon builds and experiments — pulled live from GitHub, each one designed, built and shipped end to end.</p>
+    <p class="sec-sub">Hand-picked builds — each one designed, built and shipped end to end. Stars and dates refresh live from GitHub.</p>
   </div>
 
-  <div class="pin-layout">
-    <aside class="pin-left" data-reveal>
-      <p class="caption">Featured work</p>
-      <div class="pin-index"><span id="pinCurrent">01</span><small> / 06</small></div>
-      <div class="pin-bar"><div id="pinProgress"></div></div>
-      <p>Live from GitHub — top repositories by stars, most recent push breaks ties. Scroll to walk through each one.</p>
-    </aside>
-
-    <div class="project-list work-list">
-      <article class="work-row" data-reveal data-project-index="0">
-        <div class="work-idx">01<b>//06</b></div>
-        <div>
-          <h3 class="work-title"><a href="https://github.com/HarshKumar30/Portfolio" target="_blank" rel="noopener">Portfolio Website</a></h3>
-          <p class="work-brief">Fully responsive single-page app showcasing projects, skills and background. Theme system, SEO best practices, GitHub Pages + Actions CI/CD, reusable component architecture, mobile-first layout.</p>
-          <div class="work-tags"><span class="tag">Astro</span><span class="tag">TypeScript</span><span class="tag">CI/CD</span><span class="tag">SEO</span></div>
-        </div>
-        <div class="work-side">
-          <span class="work-meta">2025 // Web</span>
-          <a class="work-link" href="https://github.com/HarshKumar30/Portfolio" target="_blank" rel="noopener">View code ↗</a>
+  <div class="project-list proj-grid">
+      <article class="proj-card" data-reveal data-project-index="0" data-tilt data-repo="Portfolio">
+        <div class="shot"><span class="browser" aria-hidden="true"><i></i><i></i><i></i></span><span class="shot-art" aria-hidden="true">P</span></div>
+        <div class="proj-body">
+          <div class="pj-top"><span class="pnum">01</span><span class="pyear">2025 // WEB</span></div>
+          <h3>Portfolio Website</h3>
+          <p class="pj-desc">Fully responsive single-page app showcasing projects, skills and background. Theme system, SEO best practices, CI/CD, reusable components, mobile-first layout.</p>
+          <div class="tags"><span>Astro</span><span>TypeScript</span><span>CI/CD</span><span>SEO</span></div>
+          <div class="pj-foot">
+            <a href="https://github.com/HarshKumar30/Portfolio" target="_blank" rel="noopener">View code ↗</a>
+            <span class="pnote">★ 0</span>
+          </div>
         </div>
       </article>
 
-      <article class="work-row" data-reveal data-project-index="1">
-        <div class="work-idx">02<b>//06</b></div>
-        <div>
-          <h3 class="work-title"><a href="https://github.com/HarshKumar30" target="_blank" rel="noopener">Task Tracker</a></h3>
-          <p class="work-brief">Full-stack task manager — Python backend with a dynamic JS frontend. Normalized schema, optimized filter and sort queries, RESTful JSON API, drag-and-drop reorder, deadline highlighting.</p>
-          <div class="work-tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLite</span><span class="tag">REST API</span></div>
-        </div>
-        <div class="work-side">
-          <span class="work-meta">2025 // Full-stack</span>
-          <a class="work-link" href="https://github.com/HarshKumar30" target="_blank" rel="noopener">View code ↗</a>
-        </div>
-      </article>
-
-      <article class="work-row" data-reveal data-project-index="2">
-        <div class="work-idx">03<b>//06</b></div>
-        <div>
-          <h3 class="work-title">LPG Leakage Detection</h3>
-          <p class="work-brief">Arduino / ESP32 sensor rig with real-time alerts. Designed and demoed in 24 hours.</p>
-          <div class="work-tags"><span class="tag">IoT</span><span class="tag">Arduino</span><span class="tag">ESP32</span></div>
-        </div>
-        <div class="work-side">
-          <span class="work-meta">Hackathon</span>
+      <article class="proj-card" data-reveal data-project-index="1" data-tilt data-repo="Task-Tracker">
+        <div class="shot"><span class="browser" aria-hidden="true"><i></i><i></i><i></i></span><span class="shot-art" aria-hidden="true">T</span></div>
+        <div class="proj-body">
+          <div class="pj-top"><span class="pnum">02</span><span class="pyear">2025 // FULL-STACK</span></div>
+          <h3>Task Tracker</h3>
+          <p class="pj-desc">Full-stack task manager — Python backend with a dynamic JS frontend. Normalized schema, RESTful JSON API, drag-and-drop reorder, deadline highlighting.</p>
+          <div class="tags"><span>Python</span><span>Flask</span><span>SQLite</span><span>REST API</span></div>
+          <div class="pj-foot">
+            <a href="https://github.com/HarshKumar30" target="_blank" rel="noopener">View code ↗</a>
+            <span class="pnote">★ 0</span>
+          </div>
         </div>
       </article>
 
-      <article class="work-row" data-reveal data-project-index="3">
-        <div class="work-idx">04<b>//06</b></div>
-        <div>
-          <h3 class="work-title">Doc Security Suite</h3>
-          <p class="work-brief">Steganography plus cryptographic signing for tamper-proof documents.</p>
-          <div class="work-tags"><span class="tag">Python</span><span class="tag">Crypto</span></div>
-        </div>
-        <div class="work-side">
-          <span class="work-meta">Hackathon</span>
-        </div>
-      </article>
-
-      <article class="work-row" data-reveal data-project-index="4">
-        <div class="work-idx">05<b>//06</b></div>
-        <div>
-          <h3 class="work-title">Eye-Tracking Keyboard</h3>
-          <p class="work-brief">Assistive keyboard powered by in-browser gaze prediction.</p>
-          <div class="work-tags"><span class="tag">JavaScript</span><span class="tag">WebGazer.js</span></div>
-        </div>
-        <div class="work-side">
-          <span class="work-meta">Hackathon</span>
+      <article class="proj-card" data-reveal data-project-index="2" data-tilt data-repo="TerraTrust">
+        <div class="shot"><span class="browser" aria-hidden="true"><i></i><i></i><i></i></span><span class="shot-art" aria-hidden="true">T</span></div>
+        <div class="proj-body">
+          <div class="pj-top"><span class="pnum">03</span><span class="pyear">WEB // CONCEPT</span></div>
+          <h3>TerraTrust</h3>
+          <p class="pj-desc">Web platform concept with a focus on trust, transparency and clean user experience.</p>
+          <div class="tags"><span>JavaScript</span><span>Web</span></div>
+          <div class="pj-foot">
+            <a href="https://github.com/HarshKumar30/TerraTrust" target="_blank" rel="noopener">View code ↗</a>
+            <span class="pnote">★ 0</span>
+          </div>
         </div>
       </article>
 
-      <article class="work-row" data-reveal data-project-index="5">
-        <div class="work-idx">06<b>//06</b></div>
-        <div>
-          <h3 class="work-title">Time-Series Prediction</h3>
-          <p class="work-brief">LSTM and Transformer architectures for market forecasting.</p>
-          <div class="work-tags"><span class="tag">Python</span><span class="tag">LSTM</span><span class="tag">Transformer</span></div>
+      <article class="proj-card" data-reveal data-project-index="3" data-tilt data-repo="Ateller-A-Digital-Marketplace">
+        <div class="shot"><span class="browser" aria-hidden="true"><i></i><i></i><i></i></span><span class="shot-art" aria-hidden="true">A</span></div>
+        <div class="proj-body">
+          <div class="pj-top"><span class="pnum">04</span><span class="pyear">WEB // CONCEPT</span></div>
+          <h3>Ateller Marketplace</h3>
+          <p class="pj-desc">Digital marketplace concept — listings, discovery and modern storefront UX.</p>
+          <div class="tags"><span>JavaScript</span><span>Web</span></div>
+          <div class="pj-foot">
+            <a href="https://github.com/HarshKumar30/Ateller-A-Digital-Marketplace" target="_blank" rel="noopener">View code ↗</a>
+            <span class="pnote">★ 0</span>
+          </div>
         </div>
-        <div class="work-side">
-          <span class="work-meta">Lab // ML</span>
+      </article>
+
+      <article class="proj-card" data-reveal data-project-index="4" data-tilt data-repo="Image-Segmentation-for-Self-Driving-Cars">
+        <div class="shot"><span class="browser" aria-hidden="true"><i></i><i></i><i></i></span><span class="shot-art" aria-hidden="true">I</span></div>
+        <div class="proj-body">
+          <div class="pj-top"><span class="pnum">05</span><span class="pyear">LAB // ML</span></div>
+          <h3>Self-Driving Segmentation</h3>
+          <p class="pj-desc">Image segmentation experiments for self-driving perception pipelines.</p>
+          <div class="tags"><span>Python</span><span>ML</span><span>Vision</span></div>
+          <div class="pj-foot">
+            <a href="https://github.com/HarshKumar30/Image-Segmentation-for-Self-Driving-Cars" target="_blank" rel="noopener">View code ↗</a>
+            <span class="pnote">★ 0</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj-card" data-reveal data-project-index="5" data-tilt data-repo="kaggle-HousePrices">
+        <div class="shot"><span class="browser" aria-hidden="true"><i></i><i></i><i></i></span><span class="shot-art" aria-hidden="true">K</span></div>
+        <div class="proj-body">
+          <div class="pj-top"><span class="pnum">06</span><span class="pyear">LAB // ML</span></div>
+          <h3>House Prices</h3>
+          <p class="pj-desc">House-price regression on the classic Kaggle dataset — features, validation, ensembles.</p>
+          <div class="tags"><span>Python</span><span>Kaggle</span><span>ML</span></div>
+          <div class="pj-foot">
+            <a href="https://github.com/HarshKumar30/kaggle-HousePrices" target="_blank" rel="noopener">View code ↗</a>
+            <span class="pnote">★ 0</span>
+          </div>
         </div>
       </article>
     </div>
-  </div>
-
-  <div class="heatmap-wrap gh-wrap" data-reveal id="ghActivity" hidden>
-    <div class="hm-head">
-      <p>GITHUB COMMITS — LAST 90 DAYS</p>
-      <div class="hm-legend"><span>Less</span><i class="lv0"></i><i class="lv1"></i><i class="lv2"></i><i class="lv3"></i><i class="lv4"></i><span>More</span></div>
-    </div>
-    <div class="heatmap-scroll">
-      <div class="hm-months" id="ghMonths" aria-hidden="true"></div>
-      <div class="heatmap" id="ghHeatmap" role="img" aria-label="GitHub commit activity heatmap"></div>
-    </div>
-    <p class="hm-meta" id="ghMeta"></p>
-  </div>
 
   <script src="../scripts/github.ts"></script>
-  <script src="../scripts/activity.ts"></script>
 </section>
